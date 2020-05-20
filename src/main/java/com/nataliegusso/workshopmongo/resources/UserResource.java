@@ -1,20 +1,21 @@
 package com.nataliegusso.workshopmongo.resources;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.nataliegusso.workshopmongo.domain.User;
 import com.nataliegusso.workshopmongo.dto.UserDTO;
 import com.nataliegusso.workshopmongo.services.UserService;
-import com.nataliegusso.workshopmongo.services.exception.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value="/users")
@@ -35,5 +36,13 @@ public class UserResource {
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 		User obj = service.findById(id);  
 		return ResponseEntity.ok().body(new UserDTO(obj));  //500 - 404
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)  //ou @PostMapping
+ 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {  //@RequestBody p aceitar o objeto UserDTO
+		User obj = service.fromDTO(objDto);  //Converte o UserDto p User
+		obj = service.insert(obj);  //inseriu no BD
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();  //Apesar da resposta ser um void, é uma boa prática retornar um cabeçalho com a URL do código
+		return ResponseEntity.created(uri).build();  //created retorna o cód 201 que é o cód de resposta http qdo cria um novo recurso
 	}
 }
