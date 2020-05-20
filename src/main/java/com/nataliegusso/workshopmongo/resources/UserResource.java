@@ -45,4 +45,10 @@ public class UserResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();  //Apesar da resposta ser um void, é uma boa prática retornar um cabeçalho com a URL do código
 		return ResponseEntity.created(uri).build();  //created retorna o cód 201 que é o cód de resposta http qdo cria um novo recurso
 	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+ 	public ResponseEntity<Void> delete(@PathVariable String id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();  //noContent: cód 204
+	}
 }

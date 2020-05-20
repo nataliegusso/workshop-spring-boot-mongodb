@@ -30,6 +30,11 @@ public class UserService {
 		return repo.insert(obj);
 	}
 
+	public void delete(String id) {
+		findById(id);
+		repo.deleteById(id);
+	}
+	
 	public User fromDTO(UserDTO objDto) {  //Pega um dto e instancia um usuário user  //Poderia ser feito na classe UserDTO, mas aqui já tem dependência no BD, o que facilita
 		return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
 	}
