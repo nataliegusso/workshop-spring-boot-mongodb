@@ -38,9 +38,14 @@ public class Instantiation implements CommandLineRunner {  //ApplicationRunner e
 
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
 		
+		//Post com User aninhado: no obj post tenho cópia dos dados do user correspondente (desnormalizar os dados)
 		Post post1 = new Post(null, sdf.parse("21/03/2018"), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", new AuthorDTO(maria));
 		Post post2 = new Post(null, sdf.parse("23/03/2018"), "Bom dia", "Acordei feliz hoje!", new AuthorDTO(maria));
 		
 		postReposiroty.saveAll(Arrays.asList(post1, post2));
+		
+		//Dentro do usuário tenho a referência dos posts (@DBRef em User), os posts estão em outra coleção (decisão de design)
+		maria.getPosts().addAll(Arrays.asList(post1, post2));
+		userRepository.saveAll(Arrays.asList(maria));		
 	}  
 }
