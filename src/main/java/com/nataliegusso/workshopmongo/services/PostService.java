@@ -1,5 +1,6 @@
 package com.nataliegusso.workshopmongo.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,10 @@ public class PostService {
 
 	public List<Post> findByTitle(String text) {
 		return repo.searchTitle(text);
+	}
+	
+	public List<Post> fullSearch(String text, Date minDate, Date maxDate) {  //Método de consulta
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);  //o Date pega às 0h do dia, mas quero todos os posts do dia até às 24h, logo, tenho que acrescentar 1 dia
+		return repo.fullSearch(text, minDate, maxDate);
 	}
 }
