@@ -18,6 +18,8 @@ import com.nataliegusso.workshopmongo.domain.User;
 import com.nataliegusso.workshopmongo.dto.UserDTO;
 import com.nataliegusso.workshopmongo.services.UserService;
 
+//Postman
+
 @RestController
 @RequestMapping(value="/users")
 public class UserResource {

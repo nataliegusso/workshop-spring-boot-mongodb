@@ -14,6 +14,8 @@ import com.nataliegusso.workshopmongo.dto.AuthorDTO;
 import com.nataliegusso.workshopmongo.repository.PostRepository;
 import com.nataliegusso.workshopmongo.repository.UserRepository;
 
+//MongoDB
+
 @Configuration
 public class Instantiation implements CommandLineRunner {  //ApplicationRunner e CommandLineRunner: permitem executar o código imediatamente após o início do aplicativo Spring Boot.
 
